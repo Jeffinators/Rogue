@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <bits/stdc++.h>
 #include <cmath>
 
 
@@ -10,8 +9,8 @@ int playerX = 10, playerY = 10;
 bool Game = true;
 void draw() {
     //crates random room size
-	int width = rand() % 21, height = rand() % 21;
-	system("clear");
+	int width = 20, height = 20;
+	system("cls");
 	//creates the top of the room
 	for (int i = 0; i < width+1; i++) {
 		std::cout << "#";
