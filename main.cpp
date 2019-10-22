@@ -1,29 +1,29 @@
 #include <iostream>
+#include <string>
 
-int width, hight = 20;
 void draw() {
-	system("cls");
-	for (int i = 0; i < width; i++) {
-		cout << "#";
+	int width = 20, height = 20;
+	for (int i = 0; i < width+1; i++) {
+		std::cout << "#";
 	}
-	cout << endl;
+	std::cout << "\n";
 	for (int i = 0; i < height; i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < width+1; j++)
 		{
 			if (j == 0)
-				cout << "#";
-			else cout << " ";
+				std::cout << "#";
+			else std::cout << " ";
 
 			if (j == width - 1)
-				cout << "#"
+				std::cout << "#";
 		}
-		cout << endl
+		std::cout << "\n";
 	}
-	for (int i = 0; i < width; i++) {
-		cout << "#";
+	for (int i = 0; i < width+1; i++) {
+		std::cout << "#";
 	}
-	cout << endl;
+	std::cout << "\n";
 }
 int main() {
 	draw();
