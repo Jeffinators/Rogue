@@ -77,6 +77,7 @@ bool input() {
 	}
 
 }
+//detects if the player collides with the exit
 void collision() {
 	if (playerX == exitX && playerY == exitY) {
 		width = (rand() % 30) + 20;
