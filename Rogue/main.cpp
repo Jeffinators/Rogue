@@ -7,9 +7,12 @@
 using namespace std;
 int playerX = 10, playerY = 10;
 bool Game = true;
+//crates random room size
+int width = 20, height = 20;
+//creates an exit
+int exitX = rand() % 20, exitY = rand() % 20;
 void draw() {
-	//crates random room size
-	int width = 20, height = 20;
+//clears console ("clear") on linux
 	system("cls");
 	//creates the top of the room
 	for (int i = 0; i < width + 1; i++) {
@@ -27,6 +30,10 @@ void draw() {
 			if (i == playerX && j == playerY) {
 				cout << "@";
 			}
+			//creates exit
+			if (i == exitX && j == exitY) {
+				cout << "%";
+			}
 			else std::cout << " ";
 
 			if (j == width - 1)
@@ -39,6 +46,7 @@ void draw() {
 		std::cout << "#";
 	}
 	std::cout << "\n";
+	
 }
 bool input() {
 	char command;
@@ -69,11 +77,19 @@ bool input() {
 	}
 
 }
+void collision() {
+	if (playerX == exitX && playerY == exitY) {
+		width = (rand() % 30) + 20;
+		height = (rand() % 30) + 20;
+		draw();
+	}
+}
 int main() {
 	//while loop for game to run
 	while (Game == true) {
 		draw();
 		input();
+		collision();
 	}
 
 }
