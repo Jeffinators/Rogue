@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include<vector>
 
 
 
-using namespace std;
+//using namespace std;
 int playerX = 10, playerY = 10;
 bool Game = true;
 //crates random room size
@@ -12,11 +13,12 @@ int width = 20, height = 20;
 //creates an exit
 int exitX = rand() % 20, exitY = rand() % 20;
 //allows saving of previous exits and new exits
+int oWidth; //i dont even see a cmd popup... 
+int oHeight;//just don't ex out or it will error
 int oldExitX = exitX, oldExitY = exitY;
-int newExitX = 19, newExitY = 19;
+int newExitX = (rand() % 20) + 20, newExitY = (rand() % 20) + 20;
 //counts the room number
 int room;
-int oWidth = 10, oHeight = 10;
 void draw() {
 	system("cls");
 	//creates the top of the room
@@ -33,14 +35,14 @@ void draw() {
 			}
 			//write player location here
 			if (i == playerX && j == playerY) {
-				cout << "@";
+				std::cout << "@";
 			}
 			//creates exit
-			if (i == oldExitX && j == oldExitY) {
-				cout << "%";
+			if (room > 0 && i == oldExitX && j == oldExitY) {
+				std::cout << "E";
 			}
-			if (room > 0 && i == newExitX && j == newExitY) {
-				cout << "%";
+			if (i == newExitX && j == newExitY) {
+				std::cout << "%";
 			}
 			else std::cout << " ";
 
@@ -59,7 +61,7 @@ void draw() {
 bool input() {
 	char command;
 	while (Game = true) {
-		cin >> command;
+		std::cin >> command;
 		//This moves down
 		if (command == 's') {
 			playerX++;
@@ -86,20 +88,13 @@ bool input() {
 
 }
 //detects if the player collides with the exit
-void collision() {
-	if (room == 0 && playerX == exitX && playerY == exitY) {
-		oWidth = width;
-		oHeight = height;
-		width = (rand() % 30) + 20;
-		height = (rand() % 30) + 20;
-		room++;
-		newExitX = 19;
-		newExitY = 19;
-		draw();
-	}
+void collision()
+{
+	std::vector<int> oldRoomsW;
+	std::vector<int> oldRoomsH;
 	if (playerX == newExitX && playerY == newExitY) {
-		oWidth = width;
-		oHeight = height;
+		oldRoomsW.push_back(width);
+		oldRoomsH.push_back(height);
 		width = (rand() % 30) + 20;
 		height = (rand() % 30) + 20;
 		room++;
@@ -108,11 +103,11 @@ void collision() {
 		newExitX = (rand() % 20);
 		newExitY = (rand() % 20);
 	}
-	//goes back a room (not working yet)
-	if (room > 1 && playerX == oldExitX && playerY == oldExitY) {
-		width = oWidth;
-		height = oHeight;
-		draw();
+	if (room > 0 && playerX == oldExitX && playerY == oldExitY) {
+		width = oldRoomsW.back();
+		height = oldRoomsH.back();
+		oldRoomsH.pop_back();
+		oldRoomsW.pop_back();
 	}
 }
 //creates new exit
