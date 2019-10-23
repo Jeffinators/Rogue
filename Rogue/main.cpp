@@ -16,6 +16,7 @@ int oldExitX = exitX, oldExitY = exitY;
 int newExitX = 19, newExitY = 19;
 //counts the room number
 int room;
+int oWidth = 10, oHeight = 10;
 void draw() {
 	system("cls");
 	//creates the top of the room
@@ -86,10 +87,9 @@ bool input() {
 }
 //detects if the player collides with the exit
 void collision() {
-	int oldWidth, oldHeight;
-	if (playerX == exitX && playerY == exitY) {
-		oldWidth = width;
-		oldHeight = height;
+	if (room == 0 && playerX == exitX && playerY == exitY) {
+		oWidth = width;
+		oHeight = height;
 		width = (rand() % 30) + 20;
 		height = (rand() % 30) + 20;
 		room++;
@@ -98,19 +98,20 @@ void collision() {
 		draw();
 	}
 	if (playerX == newExitX && playerY == newExitY) {
-		oldWidth = width;
-		oldHeight = height;
+		oWidth = width;
+		oHeight = height;
 		width = (rand() % 30) + 20;
 		height = (rand() % 30) + 20;
 		room++;
 		oldExitX = newExitX;
 		oldExitY = newExitY;
-		newExitX = (rand() % 20) + 5;
-		newExitY = (rand() % 20) + 5;
+		newExitX = (rand() % 20);
+		newExitY = (rand() % 20);
 	}
-	if (room > 0 && playerX == oldExitX && playerY == oldExitY) {
-		width = oldWidth;
-		height = oldHeight;
+	//goes back a room (not working yet)
+	if (room > 1 && playerX == oldExitX && playerY == oldExitY) {
+		width = oWidth;
+		height = oHeight;
 		draw();
 	}
 }
