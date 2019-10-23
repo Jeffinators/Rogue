@@ -11,8 +11,12 @@ bool Game = true;
 int width = 20, height = 20;
 //creates an exit
 int exitX = rand() % 20, exitY = rand() % 20;
+//allows saving of previous exits and new exits
+int oldExitX = exitX, oldExitY = exitY;
+int newExitX = 19, newExitY = 19;
+//counts the room number
+int room;
 void draw() {
-//clears console ("clear") on linux
 	system("cls");
 	//creates the top of the room
 	for (int i = 0; i < width + 1; i++) {
@@ -31,7 +35,10 @@ void draw() {
 				cout << "@";
 			}
 			//creates exit
-			if (i == exitX && j == exitY) {
+			if (i == oldExitX && j == oldExitY) {
+				cout << "%";
+			}
+			if (room > 0 && i == newExitX && j == newExitY) {
 				cout << "%";
 			}
 			else std::cout << " ";
@@ -79,16 +86,54 @@ bool input() {
 }
 //detects if the player collides with the exit
 void collision() {
+	int oldWidth, oldHeight;
 	if (playerX == exitX && playerY == exitY) {
+		oldWidth = width;
+		oldHeight = height;
 		width = (rand() % 30) + 20;
 		height = (rand() % 30) + 20;
+		room++;
+		newExitX = 19;
+		newExitY = 19;
+		draw();
+	}
+	if (playerX == newExitX && playerY == newExitY) {
+		oldWidth = width;
+		oldHeight = height;
+		width = (rand() % 30) + 20;
+		height = (rand() % 30) + 20;
+		room++;
+		oldExitX = newExitX;
+		oldExitY = newExitY;
+		newExitX = (rand() % 20) + 5;
+		newExitY = (rand() % 20) + 5;
+	}
+	if (room > 0 && playerX == oldExitX && playerY == oldExitY) {
+		width = oldWidth;
+		height = oldHeight;
 		draw();
 	}
 }
+//creates new exit
+/*void exit() {
+	int oldExitX = exitX, oldExitY = exitY;
+	int newExitX = (rand() % 29) + 20, newExitY = (rand() % 29) + 20;
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width + 1; j++)
+		{
+			//creates exit
+			if (i == exitX && j == exitY) {
+				cout << "%";
+			}
+		}
+	}
+}*/
 int main() {
 	//while loop for game to run
 	while (Game == true) {
 		draw();
+		//exit();
 		input();
 		collision();
 	}
